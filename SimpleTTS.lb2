@@ -1,0 +1,77 @@
+[extension_name]
+Simple TTS
+
+[extension_info]
+Written by Hue, the Centipede Youkai
+
+[insert_external]
+<style type="">
+  * {
+      box-sizing: border-box;
+    }
+</style>
+
+<div class="row">
+  <p>Simple TTS</p>
+</div>
+<div class="row">
+  <div class="column">
+    <img class="hue-img" src="https://i.imgur.com/PXr3Lez.png"></img>
+  </div>
+  <div class="column">
+    <p>Created by Hue, the Centipede Youkai</p> 
+    <a href="https://twitter.com/Hue_SwordDevil">Twitter</a>
+    <a href="https://github.com/HueVirtualCreature/Lioranboard2VTubeStudioExtension">GitHub</a>
+  </div>
+</div>
+
+[insert_command]
+LB.extCommand("SimpleTTS - Speak",3355443, 52, { 
+	Message: ['Message', 14, ""],
+	Voice:  ['Voice', 19, "default", null, speechSynthesis.getVoices().map(e => e.name)],
+	Pitch:  ['Pitch', 11, 25],
+	Rate:  ['Rate', 11, 10]
+})
+
+[insert_hook]
+case "SimpleTTS - Speak":{
+	let voice = null;
+	if (!!LioranBoardJSON.Voice && LioranBoardJSON.Voice !== "default") {
+		//TODO Might be worth storing the voices somewhere instead of retrieving each time
+		voice = speechSynthesis.getVoices().find(e => e.name === LioranBoardJSON.Voice)
+	}
+    speakMessage(LioranBoardJSON.Message, voice, LioranBoardJSON.Pitch, LioranBoardJSON.Rate);
+} break
+
+[insert_script]
+const SIMPLETTS_PLUGINNAME = "SimpleTTS";
+const SIMPLETTS_AUTHORNAME = "Hue, the Centipede Youkai";
+const SIMPLETTS_PLUGIN_ICON64 = null;
+
+function postLBMessage(message, level = 1) {
+	switch(level) {
+		case 0:
+			LB.notification(`${SIMPLETTS_PLUGINNAME} - ${message}`);
+			break;
+		case 1:
+			LB.alert(`${SIMPLETTS_PLUGINNAME} - ${message}`);
+			break;
+	}
+}
+
+function postConsoleMessage(message) {
+	console.debug(`${SIMPLETTS_PLUGINNAME}: ${message}`);
+}
+
+function speakMessage(text, voice, pitch, rate) {
+    postLBMessage("Attempting to say: " + text);
+    let synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(text);
+	utterThis.voice = voice;
+	utterThis.pitch = pitch * (2);
+	utterThis.rate = rate * (10);
+    synth.speak(utterThis);
+}
+
+postLBMessage(`${SIMPLETTS_PLUGINNAME} - Initializing...`);
+[insert_over]
