@@ -44,11 +44,11 @@ case "SimpleTTS - Speak":{
 } break
 
 [insert_script]
-const SIMPLETTS_PLUGINNAME = "SimpleTTS";
 const SIMPLETTS_AUTHORNAME = "Hue, the Centipede Youkai";
 const SIMPLETTS_PLUGIN_ICON64 = null;
 
 function postLBMessage(message, level = 1) {
+	const SIMPLETTS_PLUGINNAME = "SimpleTTS";
 	switch(level) {
 		case 0:
 			LB.notification(`${SIMPLETTS_PLUGINNAME} - ${message}`);
@@ -60,6 +60,7 @@ function postLBMessage(message, level = 1) {
 }
 
 function postConsoleMessage(message) {
+	const SIMPLETTS_PLUGINNAME = "SimpleTTS";
 	console.debug(`${SIMPLETTS_PLUGINNAME}: ${message}`);
 }
 
@@ -73,5 +74,5 @@ function speakMessage(text, voice, pitch, rate) {
     synth.speak(utterThis);
 }
 
-postLBMessage(`${SIMPLETTS_PLUGINNAME} - Initializing...`);
+postLBMessage(`Initializing...`);
 [insert_over]
