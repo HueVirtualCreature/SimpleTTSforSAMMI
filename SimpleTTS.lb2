@@ -40,14 +40,14 @@ case "SimpleTTS - Speak":{
 		//TODO Might be worth storing the voices somewhere instead of retrieving each time
 		voice = speechSynthesis.getVoices().find(e => e.name === LioranBoardJSON.Voice)
 	}
-    speakMessage(LioranBoardJSON.Message, voice, LioranBoardJSON.Pitch, LioranBoardJSON.Rate);
+    SIMPLETTS_speakMessage(LioranBoardJSON.Message, voice, LioranBoardJSON.Pitch, LioranBoardJSON.Rate);
 } break
 
 [insert_script]
 const SIMPLETTS_AUTHORNAME = "Hue, the Centipede Youkai";
 const SIMPLETTS_PLUGIN_ICON64 = null;
 
-function postLBMessage(message, level = 1) {
+function SIMPLETTS_postLBMessage(message, level = 1) {
 	const SIMPLETTS_PLUGINNAME = "SimpleTTS";
 	switch(level) {
 		case 0:
@@ -59,13 +59,13 @@ function postLBMessage(message, level = 1) {
 	}
 }
 
-function postConsoleMessage(message) {
+function SIMPLETTS_postConsoleMessage(message) {
 	const SIMPLETTS_PLUGINNAME = "SimpleTTS";
 	console.debug(`${SIMPLETTS_PLUGINNAME}: ${message}`);
 }
 
-function speakMessage(text, voice, pitch, rate) {
-    postLBMessage("Attempting to say: " + text);
+function SIMPLETTS_speakMessage(text, voice, pitch, rate) {
+    SIMPLETTS_postLBMessage("Attempting to say: " + text);
     let synth = window.speechSynthesis;
     const utterThis = new SpeechSynthesisUtterance(text);
 	utterThis.voice = voice;
@@ -74,5 +74,5 @@ function speakMessage(text, voice, pitch, rate) {
     synth.speak(utterThis);
 }
 
-postLBMessage(`Initializing...`);
+SIMPLETTS_postLBMessage(`Initializing...`);
 [insert_over]
